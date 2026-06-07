@@ -136,31 +136,10 @@ function coverUrl(livre) {
   if (livre.isbn) return `https://openlibrary.org/b/isbn/${livre.isbn}-M.jpg`;
   return null;
 }
-
-function buildCard(livre, index) {
-  const imageSrc = coverUrl(livre);
-  const favoriActif = isFavori(livre.id);
-  const couleursPalette = ['#8b1a2b', '#2e6b3e', '#b8912a', '#4a3a8b', '#c75b1a', '#a0295f'];
-  const couleurFond = couleursPalette[index % couleursPalette.length];
-  const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
-  const prefixePage = estSurAccueil ? "content/" : "";
-  return `
-    <div class="card" data-id="${livre.id}">
-      <div class="card-cover" style="background:${couleurFond}; cursor: pointer;" onclick="window.location.href='${prefixePage}detail.html?id=${livre.id}'">
-        ${imageSrc ? `<img src="${imageSrc}" alt="${livre.titre}" onerror="this.style.display='none'">` : ''}
-        <div class="card-cover-text"><span>${livre.titre}</span><small>${livre.auteur}</small></div>
-      </div>
-      <button class="heart-btn ${favoriActif ? 'active' : ''}" onclick="event.preventDefault(); toggleFavori(livres[${index}]); this.classList.toggle('active')" title="Favoris">♥</button>
-      <div class="card-body">
-        <span class="badge-cat">${livre.categorie}</span>
-        <h3>${livre.titre}</h3>
-        <p class="auteur">${livre.auteur}</p>
-        <div class="card-footer">
-          <strong class="prix">${livre.prix.toLocaleString('fr-DZ')} DA</strong>
-          <button class="btn btn-sm" onclick="ajouterPanier(livres[${index}]); this.textContent='✓'; setTimeout(() => this.textContent='+ Panier', 1500)">+ Panier</button>
-        </div>
-      </div>
-    </div>`;
-}
-
+function buildCard(livre, index) 
+{ const imageSrc = coverUrl(livre); 
+ const favoriActif = isFavori(livre.id);
+ const couleursPalette = ['#8b1a2b', '#2e6b3e', '#b8912a', '#4a3a8b', '#c75b1a', '#a0295f'];
+ const couleurFond = couleursPalette[index % couleursPalette.length]; 
+ return ` <div class="card" data-id="${livre.id}"> <!-- Seul le cadre de couverture coloré ouvre les détails du livre au clic --> <div class="card-cover" style="background:${couleurFond}; cursor: pointer;" onclick="window.location.href='detail.html?id=${livre.id}'"> ${imageSrc ? `<img src="${imageSrc}" alt="${livre.titre}" onerror="this.style.display='none'">` : ''} <div class="card-cover-text"> <span>${livre.titre}</span> <small>${livre.auteur}</small> </div> </div> <button class="heart-btn ${favoriActif ? 'active' : ''}" onclick="event.preventDefault(); toggleFavori(livres[${index}]); this.classList.toggle('active')" title="Favoris">♥</button> <div class="card-body"> <span class="badge-cat">${livre.categorie}</span> <h3>${livre.titre}</h3> <p class="auteur">${livre.auteur}</p> <div class="card-footer"> <strong class="prix">${livre.prix.toLocaleString('fr-DZ')} DA</strong> <button class="btn btn-sm" onclick="ajouterPanier(livres[${index}]); this.textContent='✓'; setTimeout(() => this.textContent='+ Panier', 1500)"> + Panier </button> </div> </div> </div>`; }
 document.addEventListener('DOMContentLoaded', () => { buildNavbar(); });
