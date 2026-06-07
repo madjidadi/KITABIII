@@ -1,40 +1,31 @@
-// Liste des catégories affichées sur la page d'accueil avec leur design
+// Configuration des univers / catégories pour l'accueil
 const categoriesConfiguration = [
-  { nom: "Roman",       couleur: "#8b1a2b", bg: "rgba(139,26,43,.08)",  icon: "📖", desc: "Histoires inoubliables" },
-  { nom: "Histoire",    couleur: "#b8912a", bg: "rgba(184,145,42,.09)", icon: "🏛️", desc: "Mémoire de notre peuple" },
-  { nom: "Science",     couleur: "#2e6b3e", bg: "rgba(46,107,62,.08)",  icon: "🔬", desc: "Explorer l'univers" },
-  { nom: "Philosophie", couleur: "#4a3a8b", bg: "rgba(74,58,139,.08)",  icon: "💡", desc: "Penser, questionner" },
-  { nom: "Jeunesse",    couleur: "#c75b1a", bg: "rgba(199,91,26,.08)",  icon: "🌟", desc: "L'éveil des jeunes" },
-  { nom: "Poésie",      couleur: "#a0295f", bg: "rgba(160,41,95,.08)",  icon: "🌸", desc: "Les mots qui touchent" },
-  { nom: "Biographie",  couleur: "#2a6b8b", bg: "rgba(42,107,139,.08)", icon: "👤", desc: "Des vies inspirantes" }
+  { nom: "Roman", icon: "📚", couleur: "#8b1a2b", bg: "#8b1a2b10", desc: "Histoires inoubliables" },
+  { nom: "Histoire", icon: "🏛️", couleur: "#b8912a", bg: "#b8912a10", desc: "Mémoire de notre peuple" },
+  { nom: "Science", icon: "🔬", couleur: "#2e6b3e", bg: "#2e6b3e10", desc: "Explorer l'univers" },
+  { nom: "Philosophie", icon: "💡", couleur: "#4a3a8b", bg: "#4a3a8b10", desc: "Penser, questionner" },
+  { nom: "Jeunesse", icon: "🌟", couleur: "#c75b1a", bg: "#c75b1a10", desc: "L'éveil des jeunes" },
+  { nom: "Poésie", icon: "🌸", couleur: "#a0295f", bg: "#a0295f10", desc: "Les mots qui touchent" },
+  { nom: "Biographie", icon: "👤", couleur: "#1a73e8", bg: "#1a73e810", desc: "Des vies inspirantes" }
 ];
 
-// Fonction principale qui initialise la page d'accueil
 function initAccueil() {
-  // 1. Affichage de la grille "À la une" 
+  // 1. Affichage des Tendances / À la une (les 4 premiers livres)
   const grilleUne = document.getElementById('grid-une');
   if (grilleUne) {
     grilleUne.innerHTML = '';
-    livres.slice(0, 4).forEach((livre, index) => { 
-      grilleUne.innerHTML += buildCard(livre, index); 
+    // Sélectionne les 4 premiers livres de la base de données
+    const selection = livres.slice(0, 4);
+    selection.forEach((livre, index) => {
+      grilleUne.innerHTML += buildCard(livre, index);
     });
   }
 
-  // 2. Affichage de la grille "Tendances" 
-  const grilleTendances = document.getElementById('grid-tendances');
-  if (grilleTendances) {
-    grilleTendances.innerHTML = '';
-    livres.slice(4, 8).forEach((livre, index) => { 
-      grilleTendances.innerHTML += buildCard(livre, index + 4); 
-    });
-  }
-
-  // 3. Affichage des catégories et calcul dynamique du nombre de livres
+  // 2. Affichage des catégories avec préfixe dynamique pour les liens
   const grilleCategories = document.getElementById('grid-cats');
   if (grilleCategories) {
     grilleCategories.innerHTML = '';
     
-    // Détection pour savoir si on doit ajouter "content/" devant le lien
     const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
     const prefixeCatalogue = estSurAccueil ? "content/" : "";
 
@@ -54,8 +45,9 @@ function initAccueil() {
         </a>`;
     });
   }
+}
 
-// Lancement automatique dès que la page est chargée
+// Lancement au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
   initAccueil();
 });
