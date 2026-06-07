@@ -227,11 +227,15 @@ function buildCard(livre, index) {
   const couleursPalette = ['#8b1a2b', '#2e6b3e', '#b8912a', '#4a3a8b', '#c75b1a', '#a0295f'];
   const couleurFond = couleursPalette[index % couleursPalette.length];
   
+  
+  const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
+  const prefixePage = estSurAccueil ? "content/" : "";
+  
   return `
     <div class="card" data-id="${livre.id}">
       
-      <!-- Seul le cadre de couverture coloré ouvre les détails du livre au clic -->
-      <div class="card-cover" style="background:${couleurFond}; cursor: pointer;" onclick="window.location.href='detail.html?id=${livre.id}'">
+    
+      <div class="card-cover" style="background:${couleurFond}; cursor: pointer;" onclick="window.location.href='${prefixePage}detail.html?id=${livre.id}'">
         ${imageSrc ? `<img src="${imageSrc}" alt="${livre.titre}" onerror="this.style.display='none'">` : ''}
         <div class="card-cover-text">
           <span>${livre.titre}</span>
