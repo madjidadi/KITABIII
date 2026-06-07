@@ -33,13 +33,17 @@ function initAccueil() {
   const grilleCategories = document.getElementById('grid-cats');
   if (grilleCategories) {
     grilleCategories.innerHTML = '';
+    
+    // Détection pour savoir si on doit ajouter "content/" devant le lien
+    const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
+    const prefixeCatalogue = estSurAccueil ? "content/" : "";
+
     categoriesConfiguration.forEach(cat => {
-      // On compte combien de livres possèdent cette catégorie
       const nombreLivres = livres.filter(l => l.categorie === cat.nom).length;
       const plural = nombreLivres > 1 ? 's' : '';
 
       grilleCategories.innerHTML += `
-        <a href="catalogue.html?cat=${cat.nom}" class="cat-card">
+        <a href="${prefixeCatalogue}catalogue.html?cat=${cat.nom}" class="cat-card">
           <div class="cat-bar" style="background:${cat.couleur}"></div>
           <div class="cat-icon">${cat.icon}</div>
           <div class="cat-name">${cat.nom}</div>
@@ -50,7 +54,6 @@ function initAccueil() {
         </a>`;
     });
   }
-}
 
 // Lancement automatique dès que la page est chargée
 document.addEventListener('DOMContentLoaded', () => {
