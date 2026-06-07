@@ -208,8 +208,15 @@ function buildNavbar() {
 
 
 function coverUrl(livre) {
-  if (livre.image) return livre.image; // Lit ton dossier images/ local
-  if (livre.isbn) return `https://openlibrary.org{livre.isbn}-M.jpg`;
+  if (livre.image) {
+   
+    const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
+    
+    
+    return estSurAccueil ? livre.image : "../" + livre.image;
+  }
+  
+  if (livre.isbn) return `https://openlibrary.org/b/isbn/${livre.isbn}-M.jpg`;
   return null;
 }
 
