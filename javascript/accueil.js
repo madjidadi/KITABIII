@@ -1,4 +1,3 @@
-// Configuration des univers / catégories pour l'accueil
 const categoriesConfiguration = [
   { nom: "Roman", icon: "📚", couleur: "#8b1a2b", bg: "#8b1a2b10", desc: "Histoires inoubliables" },
   { nom: "Histoire", icon: "🏛️", couleur: "#b8912a", bg: "#b8912a10", desc: "Mémoire de notre peuple" },
@@ -10,29 +9,26 @@ const categoriesConfiguration = [
 ];
 
 function initAccueil() {
-  // 1. Affichage des Tendances / À la une (les 4 premiers livres)
+  // 1. Affichage des Tendances (À la une)
   const grilleUne = document.getElementById('grid-une');
   if (grilleUne) {
     grilleUne.innerHTML = '';
-    // Sélectionne les 4 premiers livres de la base de données
     const selection = livres.slice(0, 4);
     selection.forEach((livre, index) => {
       grilleUne.innerHTML += buildCard(livre, index);
     });
   }
 
-  // 2. Affichage des catégories avec préfixe dynamique pour les liens
+  // 2. Affichage des catégories
   const grilleCategories = document.getElementById('grid-cats');
   if (grilleCategories) {
     grilleCategories.innerHTML = '';
-    
     const estSurAccueil = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
     const prefixeCatalogue = estSurAccueil ? "content/" : "";
 
     categoriesConfiguration.forEach(cat => {
       const nombreLivres = livres.filter(l => l.categorie === cat.nom).length;
       const plural = nombreLivres > 1 ? 's' : '';
-
       grilleCategories.innerHTML += `
         <a href="${prefixeCatalogue}catalogue.html?cat=${cat.nom}" class="cat-card">
           <div class="cat-bar" style="background:${cat.couleur}"></div>
@@ -47,7 +43,6 @@ function initAccueil() {
   }
 }
 
-// Lancement au chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
   initAccueil();
 });
